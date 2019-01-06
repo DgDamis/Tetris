@@ -6,17 +6,22 @@
 package tetrisgame;
 
 import java.awt.Color;
-import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Point;
+import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 /**
  *
  * @author Adam
  */
 public class Playground extends JPanel {
+    private Timer timer;
     Window window;
     DefaultListModel model;
+    ArrayList <GameObject> objects;
     
     public Playground(Window window, DefaultListModel model) {
         this.window = window;
@@ -24,10 +29,19 @@ public class Playground extends JPanel {
         this.init();
     }
     
+    @Override
+    protected void paintComponent(Graphics gr){
+        Cube cube = new Cube(this,new Point(100,100));
+        cube.paint(gr);
+    }
+    
     
     private void init(){
         this.setBounds(30, 30, 500, 800);
         this.setBackground(Color.white);
         this.setFocusable(true);
+        objects = new ArrayList();
+        //timer = new Timer(40,this);
+        //timer.start();
     }
 }

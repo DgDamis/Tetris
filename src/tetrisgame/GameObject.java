@@ -5,10 +5,14 @@
  */
 package tetrisgame;
 
+import java.awt.geom.Area;
+
 /**
  *
  * @author Adam
  */
-public class GameObject {
-    
+public abstract class GameObject {
+     protected Playground playground;
+     protected Boolean active;
+     
 }
