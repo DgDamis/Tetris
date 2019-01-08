@@ -18,7 +18,7 @@ import java.awt.geom.Rectangle2D;
  */
 public class Cube {
 
-    private int size;
+    private int size = 50;
     protected Playground playground;
     public Point position;
     private Area area;
@@ -34,6 +34,13 @@ public class Cube {
         this.size = size;
         this.playground = playground;
         this.position = position;
+    }
+    
+    public Cube(Playground playground, Point position, int size, Color fillColor) {
+        this.size = size;
+        this.playground = playground;
+        this.position = position;
+        this.fillColor = fillColor;
     }
 
     public Cube(Playground playground, Point position, int size, Color fillColor, Color brushColor) {

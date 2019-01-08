@@ -31,8 +31,10 @@ public class Playground extends JPanel {
     
     @Override
     protected void paintComponent(Graphics gr){
-        Cube cube = new Cube(this,new Point(100,100));
-        cube.paint(gr);
+        super.paintComponent(gr);
+        GameObject gameObject = new IShape(this,new Point(100,100));
+        gameObject.paint(gr);
+        //gameObject.fallAnimate(gr);
     }
     
     
