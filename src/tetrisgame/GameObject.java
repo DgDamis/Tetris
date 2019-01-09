@@ -5,6 +5,7 @@
  */
 package tetrisgame;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.geom.Area;
@@ -15,11 +16,13 @@ import javafx.scene.effect.Light;
  * @author Adam
  */
 public abstract class GameObject {
-
     protected Playground playground;
-    protected Boolean active;
     protected Point position;
-    IShape ishape;
+    protected Boolean active;
+    protected Color brushColor;
+    protected Color fillColor;
+    
+    //IShape ishape;
 /*
     public GameObject(Playground playground, Point position) {
         this.playground = playground;
@@ -30,13 +33,12 @@ public abstract class GameObject {
                 //break;
         //}
     }
-*//*
-    public void fallAnimate(Graphics gr) {
-        ishape = new IShape(this.playground,new Point(this.position.x, this.position.y-50));
-        ishape.paint(gr);
-
-    }
     */
+    //public void fallAnimate(GameObject gameobject) {
+    //    gameobject.position = new Point(this.position.x, this.position.y-50);
+    //}
+    
     abstract public void paint(Graphics gr);
-
+    abstract public void clear();
+    abstract public void fallAnimate();
 }

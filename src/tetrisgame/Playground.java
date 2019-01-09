@@ -8,6 +8,8 @@ package tetrisgame;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JPanel;
@@ -17,7 +19,7 @@ import javax.swing.Timer;
  *
  * @author Adam
  */
-public class Playground extends JPanel {
+public class Playground extends JPanel implements ActionListener {
     private Timer timer;
     Window window;
     DefaultListModel model;
@@ -26,15 +28,16 @@ public class Playground extends JPanel {
     public Playground(Window window, DefaultListModel model) {
         this.window = window;
         this.model = model;
+        //object = new IShape(this,new Point(100,100));
         this.init();
     }
     
     @Override
     protected void paintComponent(Graphics gr){
         super.paintComponent(gr);
-        GameObject gameObject = new IShape(this,new Point(100,100));
-        gameObject.paint(gr);
-        //gameObject.fallAnimate(gr);
+        for(GameObject ob: objects){
+           ob.paint(gr);
+        } 
     }
     
     
@@ -43,7 +46,20 @@ public class Playground extends JPanel {
         this.setBackground(Color.white);
         this.setFocusable(true);
         objects = new ArrayList();
-        //timer = new Timer(40,this);
-        //timer.start();
+        objects.add(new IShape(this,new Point(100,100)));
+        objects.add(new IShape(this,new Point(100,300)));
+        timer = new Timer(200, this);
+        timer.start();
+    }
+    
+    
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        for(GameObject ob: objects){
+            ob.fallAnimate();
+        } 
+        System.out.println("actionTimer");
+        this.repaint();
     }
 }

@@ -15,10 +15,7 @@ import java.util.ArrayList;
  * @author Adam
  */
 public class IShape extends GameObject {
-    Playground playground;
-    //Playground preview;
     ArrayList <Cube> cubes;
-    Point position;
     
     
     public IShape(Playground playground, Point position) {
@@ -36,4 +33,20 @@ public class IShape extends GameObject {
             c.paint(gr);
         } 
     }
+    
+    public void fallAnimate(){
+        cubes.clear();
+        this.position.y +=50;
+        cubes.add(new Cube(this.playground,new Point(this.position.x-50,this.position.y),50,Color.CYAN));
+        cubes.add(new Cube(this.playground,new Point(this.position.x,this.position.y),50,Color.CYAN));
+        cubes.add(new Cube(this.playground,new Point(this.position.x+50,this.position.y),50,Color.CYAN));
+        cubes.add(new Cube(this.playground,new Point(this.position.x+100,this.position.y),50,Color.CYAN));
+    }
+
+    @Override
+    public void clear() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
 }
