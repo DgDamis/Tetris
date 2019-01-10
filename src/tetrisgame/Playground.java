@@ -14,6 +14,7 @@ import javax.swing.Timer;
  *
  * @author Adam Šmehýl
  */
+
 public class Playground extends JPanel implements ActionListener {
 
     private Timer timer;
@@ -83,7 +84,7 @@ public class Playground extends JPanel implements ActionListener {
                     // Samotný test kolize
                     if (objekt.getCollision(testedObjekt)) {
                         // V případě kolize s jiným objektem dojde k vyjmutí ven
-                        while (objekt.getCollision(testedObjekt) != Boolean.FALSE) {
+                        while (objekt.getCollision(testedObjekt)) {
                         objekt.moveUp();
                         }
                         // Deaktivace objektu v případě kolize
@@ -94,7 +95,7 @@ public class Playground extends JPanel implements ActionListener {
                 // Zjištění, zda objekt nekoliduje s podlahou
                 if (floor.getFloorCollision(objekt)) {
                     // V případě kolize je objekt posunut nad podlahu
-                    while (floor.getFloorCollision(objekt) != Boolean.FALSE) {
+                    while (floor.getFloorCollision(objekt)) {
                         objekt.moveUp();
                     }
                     // Deaktivace objektu po usazení na podlahu

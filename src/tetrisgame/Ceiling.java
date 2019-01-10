@@ -6,14 +6,12 @@
 package tetrisgame;
 
 import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.Point;
-import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 /**
  *
- * @author Adam
+ * @author Adam Šmehýl
  */
 public class Ceiling extends GameObject{
     
@@ -27,32 +25,6 @@ public class Ceiling extends GameObject{
         }
         System.out.println("Vytvořen strop");
     }
-    
-    @Override
-    public void paint(Graphics gr) {
-        for(Cube c: cubes){
-            c.paint(gr);
-        } 
-    }
-    
-    public Boolean getCeilingCollision(GameObject object) {
-        Boolean anyIntersects = false;
-        for(Cube c: cubes){
-            for(Cube o: object.cubes){
-                if(c.area.intersects(new Rectangle2D.Double(o.position.getX(), o.position.getY(), o.size, o.size))){
-                   anyIntersects = true;
-                }
-            }
-        }
-        return anyIntersects;
-    }
-    
-    
-
-    @Override
-    public void clear() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
     @Override
     public void fallAnimate() {
@@ -64,18 +36,4 @@ public class Ceiling extends GameObject{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public Boolean getFloorCollision(Floor floor) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Boolean getCollision() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Boolean getFloorCollision(GameObject object) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
 }
