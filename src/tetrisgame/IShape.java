@@ -38,7 +38,7 @@ public class IShape extends GameObject {
     
     public void fallAnimate(){
         cubes.clear();
-        this.position.y +=50;
+        this.position.y +=1;
         cubes.add(new Cube(this.playground,new Point(this.position.x-50,this.position.y),50,Color.CYAN));
         cubes.add(new Cube(this.playground,new Point(this.position.x,this.position.y),50,Color.CYAN));
         cubes.add(new Cube(this.playground,new Point(this.position.x+50,this.position.y),50,Color.CYAN));
@@ -54,13 +54,13 @@ public class IShape extends GameObject {
     @Override
     public void moveUp() {
         cubes.clear();
-        this.position.y -=5;
+        this.position.y -=1;
         cubes.add(new Cube(this.playground,new Point(this.position.x-50,this.position.y),50,Color.CYAN));
         cubes.add(new Cube(this.playground,new Point(this.position.x,this.position.y),50,Color.CYAN));
         cubes.add(new Cube(this.playground,new Point(this.position.x+50,this.position.y),50,Color.CYAN));
         cubes.add(new Cube(this.playground,new Point(this.position.x+100,this.position.y),50,Color.CYAN));
     }
-
+/*
     public Boolean getFloorCollision(BottomBorder floor) {
         Boolean anyIntersects = false;
         for(Cube c: cubes){
@@ -72,9 +72,23 @@ public class IShape extends GameObject {
         }
         return anyIntersects;
     }
-
+*/
     @Override
     public Boolean getCollision() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public Boolean getFloorCollision(Floor floor) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Boolean getFloorCollision(GameObject object) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Boolean getCeilingCollision(GameObject object) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

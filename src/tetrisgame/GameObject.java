@@ -65,6 +65,7 @@ public abstract class GameObject {
     abstract public void clear();
     abstract public void fallAnimate();
     abstract public void moveUp();
-    abstract public Boolean getFloorCollision(BottomBorder floor);
+    abstract public Boolean getFloorCollision(GameObject object);
+    abstract public Boolean getCeilingCollision(GameObject object);
     abstract public Boolean getCollision();
 }

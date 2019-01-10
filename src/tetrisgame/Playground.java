@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package tetrisgame;
 
 import java.awt.Color;
@@ -17,72 +12,108 @@ import javax.swing.Timer;
 
 /**
  *
- * @author Adam
+ * @author Adam Šmehýl
  */
 public class Playground extends JPanel implements ActionListener {
+
     private Timer timer;
     Window window;
     DefaultListModel model;
-    ArrayList <GameObject> objects;
-    GameObject activeObject;
-    BottomBorder bottomBorder;
-    
+    ArrayList<GameObject> objects;
+    GameObject floor;
+    GameObject ceiling;
+    GameObject pendingObject;
+
     public Playground(Window window, DefaultListModel model) {
         this.window = window;
         this.model = model;
-        //object = new IShape(this,new Point(100,100));
         this.init();
     }
-    
+
     @Override
-    protected void paintComponent(Graphics gr){
+    protected void paintComponent(Graphics gr) {
+        // Vyvolání této funkce, pro vykreslení
         super.paintComponent(gr);
-        for(GameObject ob: objects){
-           ob.paint(gr);
-        } 
-        bottomBorder.paint(gr);
+        // Vykreslení všech objektů
+        for (GameObject ob : objects) {
+            ob.paint(gr);
+        }
+        // Vykreslení podlahy a stropu
+        floor.paint(gr);
+        ceiling.paint(gr);
+    }
+    // Testovací provoz, přidání dalšího objektu po kliknutí na tlačítko
+    public void addObject() {
+        objects.add(new IShape(this, new Point(150, 100), true));
     }
     
-    public void addObject(){
-        activeObject = new IShape(this,new Point(100,100),true);
-    }
-    
-    private void init(){
+    // Inicializace herního pole
+    private void init() {
+        // Odsazení herního pole
         this.setBounds(30, 30, 500, 800);
         this.setBackground(Color.white);
         this.setFocusable(true);
         objects = new ArrayList();
-        objects.add(new IShape(this,new Point(100,100),true));
-        objects.add(new IShape(this,new Point(100,300),true));
-        bottomBorder = new BottomBorder(this);
-        timer = new Timer(200, this);
+        // Testovací provoz, přidání dvou testovacích objektů
+        //objects.add(new IShape(this, new Point(100, 100), true));
+        //objects.add(new IShape(this, new Point(100, 300), true));
+        // Vytvoření podlahy, stropu
+        floor = new Floor(this);
+        ceiling = new Ceiling(this);
+        // Inicializace timeru
+        timer = new Timer(16, this);
         timer.start();
     }
-    
-    
 
+    // Funkce volaná timerem
     @Override
     public void actionPerformed(ActionEvent e) {
-        for(GameObject ob: objects){
-            if(ob.active){
-            ob.fallAnimate();
-            if(ob.getFloorCollision(bottomBorder)){
-                while(ob.getFloorCollision(bottomBorder)!= Boolean.FALSE){
-                    ob.moveUp();
+        // Procházení pole herních objektů
+        for (GameObject objekt : objects) {
+            // Zjištění, jestli se jedná o aktivní objekt
+            if (objekt.active) {
+                // Aktivní (tedy padající) objekt se posune níže
+                objekt.fallAnimate();
+                // Zjištění, jestli posunutý objekt nekoliduje s jiným (neaktivním, odehraným) objektem
+                for (GameObject testedObjekt : objects) {
+                    // Vynechání sebe sama pro test kolize
+                    if (objekt == testedObjekt) {
+                        continue;       
+                    }
+                    // Samotný test kolize
+                    if (objekt.getCollision(testedObjekt)) {
+                        // V případě kolize s jiným objektem dojde k vyjmutí ven
+                        while (objekt.getCollision(testedObjekt) != Boolean.FALSE) {
+                        objekt.moveUp();
+                        }
+                        // Deaktivace objektu v případě kolize
+                        objekt.setActive(Boolean.FALSE);
+                        pendingObject = new IShape(this, new Point(150, 100), true);
+                    }
                 }
-                ob.setActive(Boolean.FALSE);
-            }
-       
-            for(GameObject to: objects){
-                if(ob.getCollision(to)){
-                    while(ob.getCollision(to) != Boolean.FALSE)
-                     System.out.println("Nekonečný cyklus :)");
-                    ob.setActive(Boolean.FALSE);
+                // Zjištění, zda objekt nekoliduje s podlahou
+                if (floor.getFloorCollision(objekt)) {
+                    // V případě kolize je objekt posunut nad podlahu
+                    while (floor.getFloorCollision(objekt) != Boolean.FALSE) {
+                        objekt.moveUp();
+                    }
+                    // Deaktivace objektu po usazení na podlahu
+                    objekt.setActive(Boolean.FALSE);
+                    pendingObject = new IShape(this, new Point(150, 100), true);
+                }
+                // V případě naplnění herního pole, naskladání objektů na sebe, dojde k ukončení hry
+                if (ceiling.getCeilingCollision(objekt)) {
+                    objects.clear();
+                    this.repaint();
+                    timer.stop();
                 }
             }
-            }
-        } 
-        //System.out.println("actionTimer");
+        }
+        if(pendingObject != null){
+        objects.add(pendingObject);
+        }
+        pendingObject = null;
+        //Obnovení herního pole
         this.repaint();
     }
 }
