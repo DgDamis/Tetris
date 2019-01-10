@@ -18,22 +18,24 @@ import java.awt.geom.Rectangle2D;
  */
 public class Cube {
 
-    private int size = 50;
+    int size = 50;
     protected Playground playground;
     public Point position;
-    private Area area;
+    public Area area;
     private Color fillColor = Color.BLACK;
     private Color brushColor = Color.BLACK;
 
     public Cube(Playground playground, Point position) {
         this.playground = playground;
         this.position = position;
+        this.area = new Area(new Rectangle2D.Double(this.position.getX(), this.position.getY(), this.size, this.size));
     }
 
     public Cube(Playground playground, Point position, int size) {
         this.size = size;
         this.playground = playground;
         this.position = position;
+        this.area = new Area(new Rectangle2D.Double(this.position.getX(), this.position.getY(), this.size, this.size));
     }
     
     public Cube(Playground playground, Point position, int size, Color fillColor) {
@@ -41,6 +43,7 @@ public class Cube {
         this.playground = playground;
         this.position = position;
         this.fillColor = fillColor;
+        this.area = new Area(new Rectangle2D.Double(this.position.getX(), this.position.getY(), this.size, this.size));
     }
 
     public Cube(Playground playground, Point position, int size, Color fillColor, Color brushColor) {
@@ -49,6 +52,7 @@ public class Cube {
         this.position = position;
         this.fillColor = fillColor;
         this.brushColor = brushColor;
+        this.area = new Area(new Rectangle2D.Double(this.position.getX(), this.position.getY(), this.size, this.size));
     }
 
     public Point getPosition() {
@@ -62,7 +66,6 @@ public class Cube {
     public void paint(Graphics gr) {
         Graphics2D g2d = (Graphics2D) gr;
         g2d.setColor(fillColor);
-        this.area = new Area(new Rectangle2D.Double(this.position.getX(), this.position.getY(), this.size, this.size));
         g2d.fill(area);
     }
 

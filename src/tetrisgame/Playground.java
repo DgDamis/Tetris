@@ -24,6 +24,8 @@ public class Playground extends JPanel implements ActionListener {
     Window window;
     DefaultListModel model;
     ArrayList <GameObject> objects;
+    GameObject activeObject;
+    BottomBorder bottomBorder;
     
     public Playground(Window window, DefaultListModel model) {
         this.window = window;
@@ -38,16 +40,21 @@ public class Playground extends JPanel implements ActionListener {
         for(GameObject ob: objects){
            ob.paint(gr);
         } 
+        bottomBorder.paint(gr);
     }
     
+    public void addObject(){
+        activeObject = new IShape(this,new Point(100,100),true);
+    }
     
     private void init(){
         this.setBounds(30, 30, 500, 800);
         this.setBackground(Color.white);
         this.setFocusable(true);
         objects = new ArrayList();
-        objects.add(new IShape(this,new Point(100,100)));
-        objects.add(new IShape(this,new Point(100,300)));
+        objects.add(new IShape(this,new Point(100,100),true));
+        objects.add(new IShape(this,new Point(100,300),true));
+        bottomBorder = new BottomBorder(this);
         timer = new Timer(200, this);
         timer.start();
     }
@@ -57,9 +64,25 @@ public class Playground extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         for(GameObject ob: objects){
+            if(ob.active){
             ob.fallAnimate();
+            if(ob.getFloorCollision(bottomBorder)){
+                while(ob.getFloorCollision(bottomBorder)!= Boolean.FALSE){
+                    ob.moveUp();
+                }
+                ob.setActive(Boolean.FALSE);
+            }
+       
+            for(GameObject to: objects){
+                if(ob.getCollision(to)){
+                    while(ob.getCollision(to) != Boolean.FALSE)
+                     System.out.println("Nekonečný cyklus :)");
+                    ob.setActive(Boolean.FALSE);
+                }
+            }
+            }
         } 
-        System.out.println("actionTimer");
+        //System.out.println("actionTimer");
         this.repaint();
     }
 }
