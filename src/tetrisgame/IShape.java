@@ -37,12 +37,27 @@ public class IShape extends GameObject {
     }
 
     @Override
-    public void fallAnimate() {
+    public void fallAnimate(int speed) {
         cubes.clear();
-        this.position.y += 1;
+        this.position.y += speed;
         cubes.add(new Cube(this.playground, new Point(this.position.x - 50, this.position.y), 50, Color.CYAN));
         cubes.add(new Cube(this.playground, new Point(this.position.x, this.position.y), 50, Color.CYAN));
         cubes.add(new Cube(this.playground, new Point(this.position.x + 50, this.position.y), 50, Color.CYAN));
         cubes.add(new Cube(this.playground, new Point(this.position.x + 100, this.position.y), 50, Color.CYAN));
+    }
+
+    @Override
+    public void moveToSide(String direction) {
+        System.out.println("Jsem ve funkci pousunu");
+       cubes.clear();
+       if("Left".equals(direction)){
+           this.position.x -= 50;
+       }
+       else this.position.x += 50;
+       cubes.add(new Cube(this.playground, new Point(this.position.x - 50, this.position.y), 50, Color.CYAN));
+        cubes.add(new Cube(this.playground, new Point(this.position.x, this.position.y), 50, Color.CYAN));
+        cubes.add(new Cube(this.playground, new Point(this.position.x + 50, this.position.y), 50, Color.CYAN));
+        cubes.add(new Cube(this.playground, new Point(this.position.x + 100, this.position.y), 50, Color.CYAN));
+       
     }
 }

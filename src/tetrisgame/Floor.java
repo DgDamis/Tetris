@@ -26,13 +26,19 @@ public class Floor extends GameObject {
         System.out.println("Vytvořena podlaha");
     }
 
+
     @Override
-    public void fallAnimate() {
+    public void moveUp() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void moveUp() {
+    public void moveToSide(String direction) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void fallAnimate(int speed) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
      
