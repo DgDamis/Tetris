@@ -89,10 +89,22 @@ public abstract class GameObject {
         }
         return anyIntersects;
     }
+    
+    public int getNumberOfCollisionsInLayer(GameObject object){
+        int numberOfCollisions = 0;
+        for (Cube lw : cubes) {
+            for (Cube o : object.cubes) {
+                if (lw.area.intersects(new Rectangle2D.Double(o.position.getX(), o.position.getY(), o.size, o.size))) {
+                    numberOfCollisions++;
+                }
+            }
+        }
+        return numberOfCollisions;
+    }
 
     public void turn() {
         this.angle = (this.angle + 90);
-        if(this.angle == 360){
+        if (this.angle == 360) {
             this.angle = 0;
         }
         System.out.println("Current angle:");
@@ -161,6 +173,7 @@ public abstract class GameObject {
         }
 
     }
+
     abstract public void moveToSide(String direction);
 
     abstract public void fallAnimate(int speed);

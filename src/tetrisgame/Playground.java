@@ -29,6 +29,7 @@ public class Playground extends JPanel implements ActionListener, KeyListener {
     GameObject pendingObject;
     GameObject leftWall;
     GameObject rightWall;
+    ArrayList<GameObject> backgroundLayers;
     Point defaultStartingPoint = new Point(150, 100);
 
     public Playground(Window window, DefaultListModel model) {
@@ -50,6 +51,10 @@ public class Playground extends JPanel implements ActionListener, KeyListener {
         ceiling.paint(gr);
         leftWall.paint(gr);
         rightWall.paint(gr);
+        // Debugovací kód, vykreslení pozadí
+        //for (GameObject layer : backgroundLayers) {
+        //    layer.paint(gr);
+        //}
 
     }
 
@@ -68,6 +73,7 @@ public class Playground extends JPanel implements ActionListener, KeyListener {
         // Inicializace poslouchače klávesnice
         this.addKeyListener(this);
         objects = new ArrayList();
+        backgroundLayers = new ArrayList();
         // Testovací provoz, přidání dvou testovacích objektů
         //objects.add(new IShape(this, new Point(100, 100), true));
         //objects.add(new IShape(this, new Point(100, 300), true));
@@ -76,6 +82,10 @@ public class Playground extends JPanel implements ActionListener, KeyListener {
         ceiling = new Ceiling(this);
         leftWall = new LeftWall(this);
         rightWall = new RightWall(this);
+        // Vytvoření herních vrstev
+        for (int i = 0; i < this.getHeight() / 50; i++) {
+            backgroundLayers.add(new PlaygroundLayer(this, new Point(0, i * 50)));
+        }
         // Inicializace timeru
         timer = new Timer(16, this);
         timer.start();
@@ -84,6 +94,7 @@ public class Playground extends JPanel implements ActionListener, KeyListener {
     // Funkce volaná timerem
     @Override
     public void actionPerformed(ActionEvent e) {
+        int collisionInLayer = 0;
         // Procházení pole herních objektů
         for (GameObject objekt : objects) {
             // Zjištění, jestli se jedná o aktivní objekt
@@ -136,6 +147,12 @@ public class Playground extends JPanel implements ActionListener, KeyListener {
                         objekt.moveToSide("Left");
                     }
                 }
+
+            }
+        }
+        for (GameObject layer : backgroundLayers) {
+            for (GameObject objekt : objects) {
+                 System.out.print(layer.getNumberOfCollisionsInLayer(objekt));
             }
         }
         // Přidá do pole herních objektů čekající objekt
