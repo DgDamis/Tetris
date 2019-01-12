@@ -25,8 +25,8 @@ public abstract class GameObject {
     protected Color brushColor;
     protected Color fillColor;
     protected int size = 50;
+    protected int angle = 0;
     ArrayList<Cube> cubes;
-
 
     public void paint(Graphics gr) {
         for (Cube c : cubes) {
@@ -90,6 +90,15 @@ public abstract class GameObject {
         return anyIntersects;
     }
 
+    public void turn() {
+        this.angle = (this.angle + 90);
+        if(this.angle == 360){
+            this.angle = 0;
+        }
+        System.out.println("Current angle:");
+        System.out.print(this.angle);
+    }
+
     public Boolean getRightCollision(GameObject object) {
         Boolean anyIntersects = false;
         for (Cube rw : cubes) {
@@ -101,54 +110,57 @@ public abstract class GameObject {
         }
         return anyIntersects;
     }
-    
-    public GameObject getRandomObject(Point position){
+
+    public GameObject getRandomObject(Point position) {
         GameObject gameObject;
         Random rand = new Random();
         int n = rand.nextInt(2) + 1;
-        switch(n){
-            default: gameObject = new IShape(playground,position, true);
-            break;
-            case 2: gameObject = new OShape(playground,position, true);
-            break;
-            
+        switch (n) {
+            default:
+                gameObject = new IShape(playground, position, true);
+                break;
+            case 2:
+                gameObject = new OShape(playground, position, true);
+                break;
+
         }
         return gameObject;
     }
 
     public void move(KeyEvent ke, String caller) {
         System.out.println(ke.getKeyCode());
-        if("keyReleased".equals(caller)){
+        if ("keyReleased".equals(caller)) {
             System.out.println("Jsem v ifu");
-        switch (ke.getKeyCode()) {
-            case 37:
-                System.out.println("Posunuji vlevo.");
-                this.moveToSide("Left");
-                break;
-            case 39:
-                System.out.println("Posunuji vlevo.");
-                this.moveToSide("Right");
-                break;
-            default:
-                break;
+            switch (ke.getKeyCode()) {
+                case 37:
+                    System.out.println("Posunuji vlevo.");
+                    this.moveToSide("Left");
+                    break;
+                case 39:
+                    System.out.println("Posunuji vlevo.");
+                    this.moveToSide("Right");
+                    break;
+                case 38:
+                    System.out.println("Otáčím.");
+                    this.turn();
+                    break;
+                default:
+                    break;
 
-        }
-        }
-        else {
+            }
+        } else {
             System.out.println("Jsem v elsu");
             switch (ke.getKeyCode()) {
-            case 40:
-                System.out.println("Posunuji dolů");
-                this.fallAnimate(5);
-                break;
-            default:
-                break;
+                case 40:
+                    System.out.println("Posunuji dolů");
+                    this.fallAnimate(5);
+                    break;
+                default:
+                    break;
+            }
         }
-        }
-            
 
     }
-
     abstract public void moveToSide(String direction);
 
     abstract public void fallAnimate(int speed);

@@ -20,30 +20,21 @@ public class OShape extends GameObject {
         this.cubes = new ArrayList();
         this.position = position;
         this.active = active;
-        cubes.add(new Cube(this.playground, new Point(this.position.x, this.position.y), this.size, Color.YELLOW));
-        cubes.add(new Cube(this.playground, new Point(this.position.x + this.size, this.position.y), this.size, Color.YELLOW));
-        cubes.add(new Cube(this.playground, new Point(this.position.x, this.position.y + this.size), this.size, Color.YELLOW));
-        cubes.add(new Cube(this.playground, new Point(this.position.x + this.size, this.position.y + this.size), this.size, Color.YELLOW));
+        construct();
     }
 
     @Override
     public void moveUp() {
         cubes.clear();
         this.position.y -= 1;
-        cubes.add(new Cube(this.playground, new Point(this.position.x, this.position.y), this.size, Color.YELLOW));
-        cubes.add(new Cube(this.playground, new Point(this.position.x + this.size, this.position.y), this.size, Color.YELLOW));
-        cubes.add(new Cube(this.playground, new Point(this.position.x, this.position.y + this.size), this.size, Color.YELLOW));
-        cubes.add(new Cube(this.playground, new Point(this.position.x + this.size, this.position.y + this.size), this.size, Color.YELLOW));
+        construct();
     }
 
     @Override
     public void fallAnimate(int speed) {
         cubes.clear();
         this.position.y += speed;
-        cubes.add(new Cube(this.playground, new Point(this.position.x, this.position.y), this.size, Color.YELLOW));
-        cubes.add(new Cube(this.playground, new Point(this.position.x + this.size, this.position.y), this.size, Color.YELLOW));
-        cubes.add(new Cube(this.playground, new Point(this.position.x, this.position.y + this.size), this.size, Color.YELLOW));
-        cubes.add(new Cube(this.playground, new Point(this.position.x + this.size, this.position.y + this.size), this.size, Color.YELLOW));
+        construct();
     }
 
     @Override
@@ -55,6 +46,10 @@ public class OShape extends GameObject {
         } else {
             this.position.x += 50;
         }
+        construct();
+    }
+
+    private void construct() {
         cubes.add(new Cube(this.playground, new Point(this.position.x, this.position.y), this.size, Color.YELLOW));
         cubes.add(new Cube(this.playground, new Point(this.position.x + this.size, this.position.y), this.size, Color.YELLOW));
         cubes.add(new Cube(this.playground, new Point(this.position.x, this.position.y + this.size), this.size, Color.YELLOW));
