@@ -94,6 +94,8 @@ public class Playground extends JPanel implements ActionListener, KeyListener {
     // Funkce volaná timerem
     @Override
     public void actionPerformed(ActionEvent e) {
+        ArrayList<GameObject> newArrayList;
+        newArrayList = objects;
         // Procházení pole herních objektů
         for (GameObject objekt : objects) {
             // Zjištění, jestli se jedná o aktivní objekt
@@ -122,7 +124,7 @@ public class Playground extends JPanel implements ActionListener, KeyListener {
                             // Jesliže je řada zaplněná, je její obsah vymazán
                             if (layer.getNumberOfCollisionInLayer(objects) >= 10) {
                                 System.out.println("Mažu vrstvu");
-                                layer.clearLayer(objects);
+                                newArrayList = layer.getUpdatedArrayOfObjects(objects);
                             }
                         }
                         // Pokud dojde k deaktivaci herního objektu, vytvoří nový objekt čekající na přidání 
@@ -144,7 +146,7 @@ public class Playground extends JPanel implements ActionListener, KeyListener {
                         // Jesliže je řada zaplněná, je její obsah vymazán
                         if (layer.getNumberOfCollisionInLayer(objects) >= 10) {
                             System.out.println("Mažu vrstvu");
-                            layer.clearLayer(objects);
+                            newArrayList = layer.getUpdatedArrayOfObjects(objects);
                         }
                     }
                     // Pokud dojde k deaktivaci herního objektu, vytvoří nový objekt čekající na přidání 
@@ -175,6 +177,7 @@ public class Playground extends JPanel implements ActionListener, KeyListener {
         }
         pendingObject = null;
         //Obnovení herního pole
+        objects = newArrayList;
         this.repaint();
     }
 

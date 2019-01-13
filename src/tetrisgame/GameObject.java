@@ -99,16 +99,26 @@ public abstract class GameObject {
         return numberOfCollisions;
     }
 
-    public void clearLayer(ArrayList<GameObject> objects) {
+    // Vrací aktualizovaný ArrayList s herními objekty s odstraněnými částmi, které se nacházely na smazané vrstvě
+    public ArrayList getUpdatedArrayOfObjects(ArrayList<GameObject> objects) {
+        ArrayList<GameObject> newArrayList;
+        newArrayList = new ArrayList();
+        ArrayList<Cube> cubesToRemove;
+        cubesToRemove = new ArrayList();
         for (Cube lw : cubes) {
             for (GameObject objekt : objects) {
                 for (Cube cube : objekt.cubes) {
                     if (lw.area.intersects(new Rectangle2D.Double(cube.position.getX(), cube.position.getY(), cube.size, cube.size))) {
-                        cube = null;
+                        cubesToRemove.add(cube);
                     }
+                }
+                for(Cube cube : cubesToRemove){
+                    objekt.cubes.remove(cube);
                 }
             }
         }
+        newArrayList = objects;
+        return newArrayList;
     }
 
     public void turn() {
