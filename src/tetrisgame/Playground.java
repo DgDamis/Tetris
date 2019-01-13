@@ -94,7 +94,6 @@ public class Playground extends JPanel implements ActionListener, KeyListener {
     // Funkce volaná timerem
     @Override
     public void actionPerformed(ActionEvent e) {
-        int collisionInLayer = 0;
         // Procházení pole herních objektů
         for (GameObject objekt : objects) {
             // Zjištění, jestli se jedná o aktivní objekt
@@ -116,6 +115,10 @@ public class Playground extends JPanel implements ActionListener, KeyListener {
                         }
                         // Deaktivace objektu v případě kolize
                         objekt.setActive(Boolean.FALSE);
+                        for (GameObject layer : backgroundLayers) {
+                            System.out.print("Počet kolizí ve vrstvě: ");
+                            System.out.println(layer.getNumberOfCollisionInLayer(objects));
+                        }
                         // Pokud dojde k deaktivaci herního objektu, vytvoří nový objekt čekající na přidání 
                         pendingObject = getRandomObject(defaultStartingPoint);
                     }
@@ -128,6 +131,10 @@ public class Playground extends JPanel implements ActionListener, KeyListener {
                     }
                     // Deaktivace objektu po usazení na podlahu
                     objekt.setActive(Boolean.FALSE);
+                    for (GameObject layer : backgroundLayers) {
+                        System.out.print("Počet kolizí ve vrstvě: ");
+                        System.out.println(layer.getNumberOfCollisionInLayer(objects));
+                    }
                     // Pokud dojde k deaktivaci herního objektu, vytvoří nový objekt čekající na přidání 
                     pendingObject = getRandomObject(defaultStartingPoint);
                 }
@@ -150,11 +157,9 @@ public class Playground extends JPanel implements ActionListener, KeyListener {
 
             }
         }
-        for (GameObject layer : backgroundLayers) {
-            for (GameObject objekt : objects) {
-                 System.out.print(layer.getNumberOfCollisionsInLayer(objekt));
-            }
-        }
+        // Kontrola obsazenosti řady
+
+        //
         // Přidá do pole herních objektů čekající objekt
         if (pendingObject != null) {
             objects.add(pendingObject);

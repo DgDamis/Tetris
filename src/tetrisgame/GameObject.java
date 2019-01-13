@@ -89,13 +89,15 @@ public abstract class GameObject {
         }
         return anyIntersects;
     }
-    
-    public int getNumberOfCollisionsInLayer(GameObject object){
+
+    public int getNumberOfCollisionInLayer(ArrayList<GameObject> objects) {
         int numberOfCollisions = 0;
         for (Cube lw : cubes) {
-            for (Cube o : object.cubes) {
-                if (lw.area.intersects(new Rectangle2D.Double(o.position.getX(), o.position.getY(), o.size, o.size))) {
-                    numberOfCollisions++;
+            for (GameObject objekt : objects) {
+                for (Cube cube : cubes) {
+                    if (lw.area.intersects(new Rectangle2D.Double(cube.position.getX(), cube.position.getY(), cube.size, cube.size))) {
+                        numberOfCollisions++;
+                    }
                 }
             }
         }
