@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package tetrisgame;
 
 import java.awt.Color;
@@ -11,9 +6,9 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Adam
+ * @author Adam Šmehýl
  */
-public class JShape extends GameObject{
+public class JShape extends GameObject {
 
     public JShape(Playground playground, Point position, Boolean active) {
         this.playground = playground;
@@ -48,34 +43,34 @@ public class JShape extends GameObject{
         }
         construct();
     }
-    
+
     private void construct() {
         switch (this.angle) {
             case 0:
                 cubes.add(new Cube(this.playground, new Point(this.position.x, this.position.y), this.size, Color.BLUE));
                 cubes.add(new Cube(this.playground, new Point(this.position.x + this.size, this.position.y), this.size, Color.BLUE));
-                cubes.add(new Cube(this.playground, new Point(this.position.x + (this.size*2), this.position.y), this.size, Color.BLUE));
-                cubes.add(new Cube(this.playground, new Point(this.position.x + (this.size*2), this.position.y + this.size), this.size, Color.BLUE));
+                cubes.add(new Cube(this.playground, new Point(this.position.x + (this.size * 2), this.position.y), this.size, Color.BLUE));
+                cubes.add(new Cube(this.playground, new Point(this.position.x + (this.size * 2), this.position.y + this.size), this.size, Color.BLUE));
                 break;
             case 90:
-                cubes.add(new Cube(this.playground, new Point(this.position.x + this.size, this.position.y +this.size), this.size, Color.BLUE));
-                cubes.add(new Cube(this.playground, new Point(this.position.x + this.size, this.position.y+(this.size*2)), this.size, Color.BLUE));
-                cubes.add(new Cube(this.playground, new Point(this.position.x + this.size, this.position.y+(this.size*3)), this.size, Color.BLUE));
-                cubes.add(new Cube(this.playground, new Point(this.position.x, this.position.y+(this.size*3)), this.size, Color.BLUE));
+                cubes.add(new Cube(this.playground, new Point(this.position.x + this.size, this.position.y + this.size), this.size, Color.BLUE));
+                cubes.add(new Cube(this.playground, new Point(this.position.x + this.size, this.position.y + (this.size * 2)), this.size, Color.BLUE));
+                cubes.add(new Cube(this.playground, new Point(this.position.x + this.size, this.position.y + (this.size * 3)), this.size, Color.BLUE));
+                cubes.add(new Cube(this.playground, new Point(this.position.x, this.position.y + (this.size * 3)), this.size, Color.BLUE));
                 break;
             case 180:
                 cubes.add(new Cube(this.playground, new Point(this.position.x, this.position.y), this.size, Color.BLUE));
-                cubes.add(new Cube(this.playground, new Point(this.position.x, this.position.y+(this.size*1)), this.size, Color.BLUE));
-                cubes.add(new Cube(this.playground, new Point(this.position.x +(this.size*1), this.position.y+(this.size*1)), this.size, Color.BLUE));
-                cubes.add(new Cube(this.playground, new Point(this.position.x +(this.size*2), this.position.y+(this.size*1)), this.size, Color.BLUE));
+                cubes.add(new Cube(this.playground, new Point(this.position.x, this.position.y + (this.size * 1)), this.size, Color.BLUE));
+                cubes.add(new Cube(this.playground, new Point(this.position.x + (this.size * 1), this.position.y + (this.size * 1)), this.size, Color.BLUE));
+                cubes.add(new Cube(this.playground, new Point(this.position.x + (this.size * 2), this.position.y + (this.size * 1)), this.size, Color.BLUE));
                 break;
             case 270:
                 cubes.add(new Cube(this.playground, new Point(this.position.x, this.position.y), this.size, Color.BLUE));
-                cubes.add(new Cube(this.playground, new Point(this.position.x, this.position.y+this.size), this.size, Color.BLUE));
-                cubes.add(new Cube(this.playground, new Point(this.position.x, this.position.y+(this.size*2)), this.size, Color.BLUE));
-                cubes.add(new Cube(this.playground, new Point(this.position.x+(this.size*1), this.position.y), this.size, Color.BLUE));
+                cubes.add(new Cube(this.playground, new Point(this.position.x, this.position.y + this.size), this.size, Color.BLUE));
+                cubes.add(new Cube(this.playground, new Point(this.position.x, this.position.y + (this.size * 2)), this.size, Color.BLUE));
+                cubes.add(new Cube(this.playground, new Point(this.position.x + (this.size * 1), this.position.y), this.size, Color.BLUE));
                 break;
         }
     }
-    
+
 }

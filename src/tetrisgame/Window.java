@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package tetrisgame;
 
 import java.awt.Dimension;
@@ -10,21 +5,21 @@ import javax.swing.DefaultListModel;
 
 /**
  *
- * @author Adam
+ * @author Adam Šmehýl
  */
-
 public class Window extends javax.swing.JFrame {
-    private final Dimension preferredSize = new Dimension(1000,900);
+
+    private final Dimension preferredSize = new Dimension(1000, 900);
     private Playground playground;
     DefaultListModel model = new DefaultListModel();
     Cube cube;
-    
+
     /**
      * Creates new form NewJFrame
      */
     public Window() {
         this.setPreferredSize(preferredSize);
-        playground = new Playground(this,model);
+        playground = new Playground(this, model);
         initComponents();
         GOText.setVisible(false);
         this.add(playground);

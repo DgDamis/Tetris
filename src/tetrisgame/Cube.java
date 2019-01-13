@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package tetrisgame;
 
 import java.awt.Color;
@@ -14,7 +9,7 @@ import java.awt.geom.Rectangle2D;
 
 /**
  *
- * @author Adam
+ * @author Adam Šmehýl
  */
 public class Cube {
 
@@ -37,7 +32,7 @@ public class Cube {
         this.position = position;
         this.area = new Area(new Rectangle2D.Double(this.position.getX(), this.position.getY(), this.size, this.size));
     }
-    
+
     public Cube(Playground playground, Point position, int size, Color fillColor) {
         this.size = size;
         this.playground = playground;
