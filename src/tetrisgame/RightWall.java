@@ -24,7 +24,8 @@ public class RightWall extends GameObject {
         for(int i = 0; i < this.playground.getHeight()/this.size;i++){   
         cubes.add(new Cube(this.playground,new Point(this.position.x,this.position.y+(i*this.size)),this.size,Color.BLACK));
         }
-        System.out.println("Vytvořena podlaha");
+        // Debugovací výpis
+        // System.out.println("Vytvořena pravá zeď");
     }
     
     

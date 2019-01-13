@@ -23,7 +23,8 @@ public class PlaygroundLayer extends GameObject {
         for (int i = 0; i < this.playground.getWidth() / this.size; i++) {
             cubes.add(new Cube(this.playground, new Point(this.position.x + (i * this.size), this.position.y), this.size, Color.WHITE));
         }
-        System.out.println("Vytvořena vrstva pozadí");
+        // Debugovací výpis
+        //System.out.println("Vytvořena vrstva pozadí");
     }
 
     @Override

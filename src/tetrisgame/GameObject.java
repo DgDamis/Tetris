@@ -94,7 +94,7 @@ public abstract class GameObject {
         int numberOfCollisions = 0;
         for (Cube lw : cubes) {
             for (GameObject objekt : objects) {
-                for (Cube cube : cubes) {
+                for (Cube cube : objekt.cubes) {
                     if (lw.area.intersects(new Rectangle2D.Double(cube.position.getX(), cube.position.getY(), cube.size, cube.size))) {
                         numberOfCollisions++;
                     }
@@ -103,14 +103,27 @@ public abstract class GameObject {
         }
         return numberOfCollisions;
     }
+    
+    public void clearLayer(ArrayList<GameObject> objects){
+        for (Cube lw : cubes) {
+            for (GameObject objekt : objects) {
+                for (Cube cube : objekt.cubes) {
+                    if (lw.area.intersects(new Rectangle2D.Double(cube.position.getX(), cube.position.getY(), cube.size, cube.size))) {
+                        cube = null;
+                    }
+                }
+            }
+        }
+    }
 
     public void turn() {
         this.angle = (this.angle + 90);
         if (this.angle == 360) {
             this.angle = 0;
         }
-        System.out.println("Current angle:");
-        System.out.print(this.angle);
+        // Debugovací výpis
+        //System.out.print("Current angle: ");
+        //System.out.println(this.angle);
     }
 
     public Boolean getRightCollision(GameObject object) {
@@ -142,20 +155,24 @@ public abstract class GameObject {
     }
 
     public void move(KeyEvent ke, String caller) {
-        System.out.println(ke.getKeyCode());
+        //System.out.println(ke.getKeyCode());
         if ("keyReleased".equals(caller)) {
-            System.out.println("Jsem v ifu");
+            // Debugovací výpis
+            // System.out.println("Jsem v ifu metody move od třídy GameObject");
             switch (ke.getKeyCode()) {
                 case 37:
-                    System.out.println("Posunuji vlevo.");
+                    // Debugovací výpis
+                    //System.out.println("Posunuji vlevo.");
                     this.moveToSide("Left");
                     break;
                 case 39:
-                    System.out.println("Posunuji vlevo.");
+                    // Debugovací výpis
+                    //System.out.println("Posunuji vpravo.");
                     this.moveToSide("Right");
                     break;
                 case 38:
-                    System.out.println("Otáčím.");
+                    // Debugovací výpis
+                    //System.out.println("Otáčím.");
                     this.turn();
                     break;
                 default:
@@ -163,10 +180,12 @@ public abstract class GameObject {
 
             }
         } else {
-            System.out.println("Jsem v elsu");
+            // Debugovací výpis
+            // System.out.println("Jsem v elsu metody move od třídy GameObject");
             switch (ke.getKeyCode()) {
                 case 40:
-                    System.out.println("Posunuji dolů");
+                    // Debugovací výpis
+                    //System.out.println("Posunuji dolů");
                     this.fallAnimate(5);
                     break;
                 default:

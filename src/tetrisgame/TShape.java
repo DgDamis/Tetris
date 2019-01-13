@@ -39,7 +39,7 @@ public class TShape extends GameObject{
 
     @Override
     public void moveToSide(String direction) {
-        System.out.println("Jsem ve funkci pousunu");
+        //System.out.println("Jsem ve funkci pousunu");
         cubes.clear();
         if ("Left".equals(direction)) {
             this.position.x -= 50;

@@ -14,18 +14,18 @@ import java.util.ArrayList;
  * @author Adam Šmehýl
  */
 public class Floor extends GameObject {
-    
-     public Floor(Playground playground) {
+
+    public Floor(Playground playground) {
         this.playground = playground;
         this.cubes = new ArrayList();
-        this.position = new Point(0,300);
+        this.position = new Point(0, 300);
         this.size = 50;
-        for(int i = 0; i < this.playground.getWidth()/this.size;i++){   
-        cubes.add(new Cube(this.playground,new Point(this.position.x+(i*this.size),this.playground.getHeight()),this.size,Color.BLACK));
+        for (int i = 0; i < this.playground.getWidth() / this.size; i++) {
+            cubes.add(new Cube(this.playground, new Point(this.position.x + (i * this.size), this.playground.getHeight()), this.size, Color.BLACK));
         }
-        System.out.println("Vytvořena podlaha");
+        // Debugovací výpis
+        //System.out.println("Vytvořena podlaha");
     }
-
 
     @Override
     public void moveUp() {
@@ -41,5 +41,5 @@ public class Floor extends GameObject {
     public void fallAnimate(int speed) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-     
+
 }

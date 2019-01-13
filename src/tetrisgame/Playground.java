@@ -115,9 +115,15 @@ public class Playground extends JPanel implements ActionListener, KeyListener {
                         }
                         // Deaktivace objektu v případě kolize
                         objekt.setActive(Boolean.FALSE);
+                        // Kontrola naplnění řady po ukončení tahu (po deaktivaci objektu)
                         for (GameObject layer : backgroundLayers) {
                             System.out.print("Počet kolizí ve vrstvě: ");
                             System.out.println(layer.getNumberOfCollisionInLayer(objects));
+                            // Jesliže je řada zaplněná, je její obsah vymazán
+                            if (layer.getNumberOfCollisionInLayer(objects) >= 10) {
+                                System.out.println("Mažu vrstvu");
+                                layer.clearLayer(objects);
+                            }
                         }
                         // Pokud dojde k deaktivaci herního objektu, vytvoří nový objekt čekající na přidání 
                         pendingObject = getRandomObject(defaultStartingPoint);
@@ -131,9 +137,15 @@ public class Playground extends JPanel implements ActionListener, KeyListener {
                     }
                     // Deaktivace objektu po usazení na podlahu
                     objekt.setActive(Boolean.FALSE);
+                    // Kontrola naplnění řady po ukončení tahu (po deaktivaci objektu)
                     for (GameObject layer : backgroundLayers) {
                         System.out.print("Počet kolizí ve vrstvě: ");
                         System.out.println(layer.getNumberOfCollisionInLayer(objects));
+                        // Jesliže je řada zaplněná, je její obsah vymazán
+                        if (layer.getNumberOfCollisionInLayer(objects) >= 10) {
+                            System.out.println("Mažu vrstvu");
+                            layer.clearLayer(objects);
+                        }
                     }
                     // Pokud dojde k deaktivaci herního objektu, vytvoří nový objekt čekající na přidání 
                     pendingObject = getRandomObject(defaultStartingPoint);
@@ -157,9 +169,6 @@ public class Playground extends JPanel implements ActionListener, KeyListener {
 
             }
         }
-        // Kontrola obsazenosti řady
-
-        //
         // Přidá do pole herních objektů čekající objekt
         if (pendingObject != null) {
             objects.add(pendingObject);
@@ -171,12 +180,12 @@ public class Playground extends JPanel implements ActionListener, KeyListener {
 
     @Override
     public void keyTyped(KeyEvent ke) {
-        System.out.println("keyTyped");
+        //System.out.println("keyTyped");
     }
 
     @Override
     public void keyPressed(KeyEvent ke) {
-        System.out.println("keyPressed");
+        //System.out.println("keyPressed");
         if (copyActive != null) {
             copyActive.move(ke, "keyTyped");
         }
@@ -185,7 +194,7 @@ public class Playground extends JPanel implements ActionListener, KeyListener {
 
     @Override
     public void keyReleased(KeyEvent ke) {
-        System.out.println("keyReleased");
+        //System.out.println("keyReleased");
         if (copyActive != null) {
             copyActive.move(ke, "keyReleased");
         }

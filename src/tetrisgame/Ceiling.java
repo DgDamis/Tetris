@@ -23,7 +23,8 @@ public class Ceiling extends GameObject{
         for(int i = 0; i < this.playground.getWidth()/this.size;i++){   
         cubes.add(new Cube(this.playground,new Point(this.position.x+(i*this.size),this.position.y),this.size,Color.BLACK));
         }
-        System.out.println("Vytvořen strop");
+        // Debugovací výpis
+        //System.out.println("Vytvořen strop");
     }
 
 
