@@ -17,6 +17,15 @@ public class ZShape extends GameObject {
         this.active = active;
         construct();
     }
+    
+    public ZShape(GameObject oldObject) {
+        this.playground = oldObject.getPlayground();
+        this.position = oldObject.getPosition();
+        this.active = oldObject.getActive();
+        this.brushColor = oldObject.getBrushColor();
+        this.fillColor = oldObject.getFillColor();
+        this.cubes = oldObject.getCubes();
+    }
 
     @Override
     public void moveUp() {
@@ -71,5 +80,33 @@ public class ZShape extends GameObject {
                 cubes.add(new Cube(this.playground, new Point(this.position.x + (this.size * 1), this.position.y + (this.size * 2)), this.size, Color.RED));
                 break;
         }
+    }
+
+    @Override
+    public GameObject fallCorrection() {
+        GameObject movedObject = new ZShape(this);
+        ArrayList<Cube> oldCubes;
+        oldCubes = this.getCubes();
+        ArrayList<Cube> newCubes;
+        newCubes = new ArrayList();
+        for(Cube cube : oldCubes){
+            newCubes.add(new Cube(playground,new Point(cube.position.x,cube.position.y+50),50,Color.RED));
+        }
+        movedObject.setCubes(newCubes);
+        return movedObject;
+    }
+    
+    @Override
+    public GameObject flyCorrection() {
+        GameObject movedObject = new ZShape(this);
+        ArrayList<Cube> oldCubes;
+        oldCubes = this.getCubes();
+        ArrayList<Cube> newCubes;
+        newCubes = new ArrayList();
+        for(Cube cube : oldCubes){
+            newCubes.add(new Cube(playground,new Point(cube.position.x,cube.position.y+50),50,Color.RED));
+        }
+        movedObject.setCubes(newCubes);
+        return movedObject;
     }
 }

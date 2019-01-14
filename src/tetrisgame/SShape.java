@@ -17,6 +17,15 @@ public class SShape extends GameObject {
         this.active = active;
         construct();
     }
+    
+    public SShape(GameObject oldObject) {
+        this.playground = oldObject.getPlayground();
+        this.position = oldObject.getPosition();
+        this.active = oldObject.getActive();
+        this.brushColor = oldObject.getBrushColor();
+        this.fillColor = oldObject.getFillColor();
+        this.cubes = oldObject.getCubes();
+    }
 
     @Override
     public void moveUp() {
@@ -73,4 +82,31 @@ public class SShape extends GameObject {
         }
     }
 
+    @Override
+    public GameObject fallCorrection() {
+        GameObject movedObject = new SShape(this);
+        ArrayList<Cube> oldCubes;
+        oldCubes = this.getCubes();
+        ArrayList<Cube> newCubes;
+        newCubes = new ArrayList();
+        for(Cube cube : oldCubes){
+            newCubes.add(new Cube(playground,new Point(cube.position.x,cube.position.y+50),50,Color.GREEN));
+        }
+        movedObject.setCubes(newCubes);
+        return movedObject;
+    }
+    
+    @Override
+    public GameObject flyCorrection() {
+        GameObject movedObject = new SShape(this);
+        ArrayList<Cube> oldCubes;
+        oldCubes = this.getCubes();
+        ArrayList<Cube> newCubes;
+        newCubes = new ArrayList();
+        for(Cube cube : oldCubes){
+            newCubes.add(new Cube(playground,new Point(cube.position.x,cube.position.y-50),50,Color.GREEN));
+        }
+        movedObject.setCubes(newCubes);
+        return movedObject;
+    }
 }

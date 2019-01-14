@@ -2,6 +2,8 @@ package tetrisgame;
 
 import java.awt.Color;
 import java.awt.Point;
+import java.awt.geom.Area;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 /**
@@ -16,6 +18,15 @@ public final class IShape extends GameObject {
         this.position = position;
         this.active = active;
         construct();
+    }
+
+    public IShape(GameObject oldObject) {
+        this.playground = oldObject.getPlayground();
+        this.position = oldObject.getPosition();
+        this.active = oldObject.getActive();
+        this.brushColor = oldObject.getBrushColor();
+        this.fillColor = oldObject.getFillColor();
+        this.cubes = oldObject.getCubes();
     }
 
     @Override
@@ -73,6 +84,34 @@ public final class IShape extends GameObject {
                 cubes.add(new Cube(this.playground, new Point(this.position.x, this.position.y + (this.size * 3)), 50, Color.CYAN));
                 break;
         }
+    }
+
+    @Override
+    public GameObject fallCorrection() {
+        GameObject movedObject = new IShape(this);
+        ArrayList<Cube> oldCubes;
+        oldCubes = this.getCubes();
+        ArrayList<Cube> newCubes;
+        newCubes = new ArrayList();
+        for (Cube cube : oldCubes) {
+            newCubes.add(new Cube(playground, new Point(cube.position.x, cube.position.y + 50),50,Color.CYAN));
+        }
+        movedObject.setCubes(newCubes);
+        return movedObject;
+    }
+    
+    @Override
+    public GameObject flyCorrection() {
+        GameObject movedObject = new IShape(this);
+        ArrayList<Cube> oldCubes;
+        oldCubes = this.getCubes();
+        ArrayList<Cube> newCubes;
+        newCubes = new ArrayList();
+        for (Cube cube : oldCubes) {
+            newCubes.add(new Cube(playground, new Point(cube.position.x, cube.position.y + 50),50,Color.CYAN));
+        }
+        movedObject.setCubes(newCubes);
+        return movedObject;
     }
 
 }

@@ -23,12 +23,71 @@ public abstract class GameObject {
     protected int angle = 0;
     ArrayList<Cube> cubes;
 
+
     public void paint(Graphics gr) {
         for (Cube c : cubes) {
             c.paint(gr);
         }
     }
 
+    public Playground getPlayground() {
+        return playground;
+    }
+
+    public Point getPosition() {
+        return position;
+    }
+
+    public Color getBrushColor() {
+        return brushColor;
+    }
+
+    public Color getFillColor() {
+        return fillColor;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public int getAngle() {
+        return angle;
+    }
+
+    public ArrayList<Cube> getCubes() {
+        return cubes;
+    }
+
+    public void setPlayground(Playground playground) {
+        this.playground = playground;
+    }
+
+    public void setPosition(Point position) {
+        this.position = position;
+    }
+
+    public void setBrushColor(Color brushColor) {
+        this.brushColor = brushColor;
+    }
+
+    public void setFillColor(Color fillColor) {
+        this.fillColor = fillColor;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
+
+    public void setAngle(int angle) {
+        this.angle = angle;
+    }
+
+    public void setCubes(ArrayList<Cube> cubes) {
+        this.cubes = cubes;
+    }
+
+    
+    
     public Boolean getActive() {
         return active;
     }
@@ -199,11 +258,16 @@ public abstract class GameObject {
         }
 
     }
+    
 
     abstract public void moveToSide(String direction);
 
     abstract public void fallAnimate(int speed);
 
     abstract public void moveUp();
+    
+    abstract public GameObject fallCorrection();
+    
+    abstract public GameObject flyCorrection();
 
 }
