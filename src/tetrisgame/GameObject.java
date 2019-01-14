@@ -251,6 +251,7 @@ public abstract class GameObject {
                     // Debugovací výpis
                     //System.out.println("Posunuji dolů");
                     this.fallAnimate(5);
+                    playground.skore += 5;
                     break;
                 default:
                     break;

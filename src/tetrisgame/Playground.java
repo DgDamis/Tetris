@@ -33,6 +33,8 @@ public class Playground extends JPanel implements ActionListener, KeyListener {
     Point defaultStartingPoint = new Point(150, 100);
     int lastObject;
     int beforeLastObject;
+    public int skore = 0;
+    
 
     public Playground(Window window, DefaultListModel model) {
         this.window = window;
@@ -44,6 +46,7 @@ public class Playground extends JPanel implements ActionListener, KeyListener {
     protected void paintComponent(Graphics gr) {
         // Vyvolání této funkce, pro vykreslení
         super.paintComponent(gr);
+        window.setTitle(Integer.toString(skore));
         // Vykreslení všech objektů
         for (GameObject ob : objects) {
             ob.paint(gr);
@@ -57,12 +60,16 @@ public class Playground extends JPanel implements ActionListener, KeyListener {
         //for (GameObject layer : backgroundLayers) {
         //    layer.paint(gr);
         //}
-        
+
+        // Game Logic
         ArrayList<GameObject> newArrayList;
         ArrayList<GameObject> newArrayList2;
+        ArrayList<GameObject> tempArray1;
+        tempArray1 = new ArrayList();
         newArrayList2 = new ArrayList();
         newArrayList = objects;
         Boolean layerCleared = Boolean.FALSE;
+        Boolean checkLayers = Boolean.FALSE;
         // Procházení pole herních objektů
         for (GameObject objekt : objects) {
             // Zjištění, jestli se jedná o aktivní objekt
@@ -70,6 +77,7 @@ public class Playground extends JPanel implements ActionListener, KeyListener {
                 copyActive = objekt;
                 // Aktivní (tedy padající) objekt se posune níže
                 objekt.fallAnimate(2);
+
                 // Zjištění, jestli posunutý objekt nekoliduje s jiným (neaktivním, odehraným) objektem
                 for (GameObject testedObjekt : objects) {
                     // Vynechání sebe sama pro test kolize
@@ -84,25 +92,12 @@ public class Playground extends JPanel implements ActionListener, KeyListener {
                         }
                         // Deaktivace objektu v případě kolize
                         objekt.setActive(Boolean.FALSE);
-                        // Kontrola naplnění řady po ukončení tahu (po deaktivaci objektu)
-                        for (GameObject layer : backgroundLayers) {
-                            System.out.print("Počet kolizí ve vrstvě: ");
-                            System.out.println(layer.getNumberOfCollisionInLayer(objects));
-                            // Jesliže je řada zaplněná, je její obsah vymazán
-                            if (layer.getNumberOfCollisionInLayer(objects) >= 10) {
-                                System.out.println("Mažu vrstvu");
-                                newArrayList = layer.getUpdatedArrayOfObjects(objects);
-                                for (GameObject objekt2 : newArrayList) {
-                                    newArrayList2.add(objekt2.fallCorrection());
-                                }
-                                newArrayList = newArrayList2;
-                                layerCleared = Boolean.TRUE;
-                            }
-                        }
-                        // Pokud dojde k deaktivaci herního objektu, vytvoří nový objekt čekající na přidání 
+                        checkLayers = Boolean.TRUE;
+                        // Pokud dojde k deaktivaci herního objektu, vytvoří se nový objekt čekající na přidání 
                         pendingObject = getRandomObject(defaultStartingPoint);
                     }
                 }
+
                 // Zjištění, zda objekt nekoliduje s podlahou
                 if (floor.getFloorCollision(objekt)) {
                     // V případě kolize je objekt posunut nad podlahu
@@ -111,30 +106,18 @@ public class Playground extends JPanel implements ActionListener, KeyListener {
                     }
                     // Deaktivace objektu po usazení na podlahu
                     objekt.setActive(Boolean.FALSE);
-                    // Kontrola naplnění řady po ukončení tahu (po deaktivaci objektu)
-                    for (GameObject layer : backgroundLayers) {
-                        System.out.print("Počet kolizí ve vrstvě: ");
-                        System.out.println(layer.getNumberOfCollisionInLayer(objects));
-                        // Jesliže je řada zaplněná, je její obsah vymazán
-                        if (layer.getNumberOfCollisionInLayer(objects) >= 10) {
-                            System.out.println("Mažu vrstvu");
-                            newArrayList = layer.getUpdatedArrayOfObjects(objects);
-                            for (GameObject objekt2 : newArrayList) {
-                                newArrayList2.add(objekt2.fallCorrection());
-                            }
-                            newArrayList = newArrayList2;
-                            layerCleared = Boolean.TRUE;
-                        }
-                    }
+                    checkLayers = Boolean.TRUE;
                     // Pokud dojde k deaktivaci herního objektu, vytvoří nový objekt čekající na přidání 
                     pendingObject = getRandomObject(defaultStartingPoint);
                 }
+
                 // V případě naplnění herního pole, naskladání objektů na sebe, dojde k ukončení hry
                 if (ceiling.getCeilingCollision(objekt)) {
                     objects.clear();
                     this.repaint();
                     timer.stop();
                 }
+                // V případě naražení do zdí, je zamezeno útěku ven
                 if (leftWall.getLeftWallCollision(objekt)) {
                     while (leftWall.getLeftWallCollision(objekt)) {
                         objekt.moveToSide("Right");
@@ -145,43 +128,83 @@ public class Playground extends JPanel implements ActionListener, KeyListener {
                         objekt.moveToSide("Left");
                     }
                 }
+                ////////////
 
             }
+            // Konec procházení objektů
         }
-        // Přidá do pole herních objektů čekající objekt
+
+        // Kontrola naplnění řady
+        if (checkLayers) {
+            for (GameObject layer : backgroundLayers) {
+                //System.out.print("Počet kolizí ve vrstvě: ");
+                //System.out.println(layer.getNumberOfCollisionInLayer(objects));
+                // Jesliže je řada zaplněná, je její obsah vymazán
+                if (layer.getNumberOfCollisionInLayer(objects) >= 10) {
+                    System.out.println("Mažu vrstvu");
+                    newArrayList = layer.getUpdatedArrayOfObjects(objects);
+                    // Vše, co zbylo na herním poli, je posunuto dolů
+                    for (GameObject objekt2 : newArrayList) {
+                        tempArray1.add(objekt2.fallCorrection());
+                    }
+                    // Opravené (posunuté pole) je vráceno zpět
+                    newArrayList = tempArray1;
+                    // Uvedení informace, že došlo ke smazání vrstvy a úpravě objektů
+                    layerCleared = Boolean.TRUE;
+                    skore += 1000;
+                }
+            }
+        }
+
+        /*
         if (layerCleared) {
-            pendingObject = getRandomObject(defaultStartingPoint);
-        }
-        if (pendingObject != null) {
-            objects.add(pendingObject);
-        }
-        pendingObject = null;
-        //Obnovení herního pole
-/*
-        if (layerCleared) {
-            newArrayList = newArrayList2;
-            newArrayList2.clear();
+            ArrayList<GameObject> newArrayList3;
+            newArrayList3 = new ArrayList();
             for (GameObject obj : newArrayList) {
                 for (GameObject testedObject : newArrayList) {
+                    if (obj == testedObject) {
+                        continue;
+                    }
                     if (floor.getFloorCollision(obj)) {
-                        newArrayList2.add(obj.flyCorrection());
+                        newArrayList3.add(obj.flyCorrection());
                     } else if (obj.getCollision(testedObject)) {
-                        newArrayList2.add(obj.flyCorrection());
+                        newArrayList3.add(obj.flyCorrection());
                     } else {
-                        newArrayList2 = newArrayList;
+                        newArrayList3.add(obj);
                     }
                 }
             }
-            newArrayList = newArrayList2;
+            newArrayList = newArrayList3;
 
         }
-*/
+         */
+        if (layerCleared) {
+            for (GameObject objekt2 : newArrayList) {
+                newArrayList2.add(objekt2.fallCorrection());
+            }
+            newArrayList = newArrayList2;
+            ArrayList<GameObject> newArrayList4;
+            newArrayList4 = new ArrayList();
+            for (GameObject obj : newArrayList) {
+                if (floor.getFloorCollision(obj)) {
+                    newArrayList4.add(obj.flyCorrection());
+                } else {
+                    newArrayList4.add(obj);
+                }
+
+            }
+        }
+        // Aktualizace pole objektů
         objects = newArrayList;
-        
+        // Pokud existuje objekt čekající na přidání, je přidán
+        if (pendingObject != null) {
+            objects.add(pendingObject);
+            pendingObject = null;
+        }
 
     }
-
     // Testovací provoz, přidání dalšího objektu po kliknutí na tlačítko
+
     public void addObject() {
         objects.add(getRandomObject(defaultStartingPoint));
         this.requestFocusInWindow();
@@ -217,6 +240,7 @@ public class Playground extends JPanel implements ActionListener, KeyListener {
     // Funkce volaná timerem
     @Override
     public void actionPerformed(ActionEvent e) {
+        //Obnovení herního pole
         this.repaint();
     }
 
