@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Random;
 import javax.swing.DefaultListModel;
 import javax.swing.JPanel;
@@ -19,7 +20,7 @@ import javax.swing.Timer;
  */
 public class Playground extends JPanel implements ActionListener, KeyListener {
 
-    private Timer timer;
+    public Timer timer;
     Window window;
     DefaultListModel model;
     ArrayList<GameObject> objects;
@@ -34,6 +35,7 @@ public class Playground extends JPanel implements ActionListener, KeyListener {
     int lastObject;
     int beforeLastObject;
     public int skore = 0;
+    Boolean gameStart = Boolean.FALSE;
     
 
     public Playground(Window window, DefaultListModel model) {
@@ -67,7 +69,7 @@ public class Playground extends JPanel implements ActionListener, KeyListener {
         ArrayList<GameObject> tempArray1;
         tempArray1 = new ArrayList();
         newArrayList2 = new ArrayList();
-        newArrayList = objects;
+        newArrayList = new ArrayList(objects);
         Boolean layerCleared = Boolean.FALSE;
         Boolean checkLayers = Boolean.FALSE;
         // Procházení pole herních objektů
@@ -113,9 +115,11 @@ public class Playground extends JPanel implements ActionListener, KeyListener {
 
                 // V případě naplnění herního pole, naskladání objektů na sebe, dojde k ukončení hry
                 if (ceiling.getCeilingCollision(objekt)) {
-                    objects.clear();
+                    newArrayList.clear();
                     this.repaint();
                     timer.stop();
+                    gameStart = Boolean.FALSE;
+                    pendingObject = null;
                 }
                 // V případě naražení do zdí, je zamezeno útěku ven
                 if (leftWall.getLeftWallCollision(objekt)) {
@@ -135,6 +139,7 @@ public class Playground extends JPanel implements ActionListener, KeyListener {
         }
 
         // Kontrola naplnění řady
+        /*
         if (checkLayers) {
             for (GameObject layer : backgroundLayers) {
                 //System.out.print("Počet kolizí ve vrstvě: ");
@@ -155,6 +160,7 @@ public class Playground extends JPanel implements ActionListener, KeyListener {
                 }
             }
         }
+        */
 
         /*
         if (layerCleared) {
@@ -195,7 +201,7 @@ public class Playground extends JPanel implements ActionListener, KeyListener {
             }
         }
         // Aktualizace pole objektů
-        objects = newArrayList;
+        objects = new ArrayList(newArrayList);
         // Pokud existuje objekt čekající na přidání, je přidán
         if (pendingObject != null) {
             objects.add(pendingObject);
@@ -206,7 +212,10 @@ public class Playground extends JPanel implements ActionListener, KeyListener {
     // Testovací provoz, přidání dalšího objektu po kliknutí na tlačítko
 
     public void addObject() {
+        if(Objects.equals(gameStart, Boolean.FALSE)){
         objects.add(getRandomObject(defaultStartingPoint));
+        gameStart = Boolean.TRUE;
+        }
         this.requestFocusInWindow();
     }
 
@@ -234,7 +243,6 @@ public class Playground extends JPanel implements ActionListener, KeyListener {
         }
         // Inicializace timeru
         timer = new Timer(16, this);
-        timer.start();
     }
 
     // Funkce volaná timerem
