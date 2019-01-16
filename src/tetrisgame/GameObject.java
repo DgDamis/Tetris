@@ -230,22 +230,31 @@ public abstract class GameObject {
     }
 
     public void move(KeyEvent ke, String caller) {
-        //System.out.println(ke.getKeyCode());
+        System.out.println(ke.getKeyCode());
         if ("keyReleased".equals(caller)) {
             // Debugovací výpis
             // System.out.println("Jsem v ifu metody move od třídy GameObject");
             switch (ke.getKeyCode()) {
                 case 37:
+                    this.moveToSide("Left");
+                    break;
+                case 65:
                     // Debugovací výpis
                     //System.out.println("Posunuji vlevo.");
                     this.moveToSide("Left");
                     break;
                 case 39:
+                    this.moveToSide("Right");
+                    break;
+                case 68:
                     // Debugovací výpis
                     //System.out.println("Posunuji vpravo.");
                     this.moveToSide("Right");
                     break;
                 case 38:
+                    this.turn();
+                    break;
+                case 87:
                     // Debugovací výpis
                     //System.out.println("Otáčím.");
                     this.turn();
@@ -259,6 +268,10 @@ public abstract class GameObject {
             // System.out.println("Jsem v elsu metody move od třídy GameObject");
             switch (ke.getKeyCode()) {
                 case 40:
+                    this.fallAnimate(5);
+                    playground.skore += 5;
+                    break;
+                case 83:
                     // Debugovací výpis
                     //System.out.println("Posunuji dolů");
                     this.fallAnimate(5);

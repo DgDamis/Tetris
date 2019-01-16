@@ -153,7 +153,6 @@ public class Playground extends JPanel implements ActionListener, KeyListener {
                 }
             }
         }
-
         if (layerCleared) {
             // Vše, co zbylo na herním poli, je posunuto dolů
             for (GameObject objekt2 : newArrayList) {
