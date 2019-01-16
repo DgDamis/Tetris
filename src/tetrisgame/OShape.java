@@ -26,7 +26,7 @@ public class OShape extends GameObject {
         this.fillColor = oldObject.getFillColor();
         this.cubes = oldObject.getCubes();
     }
-    
+
     @Override
     public void moveUp() {
         cubes.clear();
@@ -54,25 +54,26 @@ public class OShape extends GameObject {
     }
 
     private void construct() {
-        cubes.add(new Cube(this.playground, new Point(this.position.x, this.position.y), this.size, Color.YELLOW));
-        cubes.add(new Cube(this.playground, new Point(this.position.x + this.size, this.position.y), this.size, Color.YELLOW));
-        cubes.add(new Cube(this.playground, new Point(this.position.x, this.position.y + this.size), this.size, Color.YELLOW));
-        cubes.add(new Cube(this.playground, new Point(this.position.x + this.size, this.position.y + this.size), this.size, Color.YELLOW));
+        cubes.add(new Cube(this.playground, new Point(this.position.x + 50, this.position.y), this.size, Color.YELLOW));
+        cubes.add(new Cube(this.playground, new Point(this.position.x + (this.size) * 2, this.position.y), this.size, Color.YELLOW));
+        cubes.add(new Cube(this.playground, new Point(this.position.x + 50, this.position.y + this.size), this.size, Color.YELLOW));
+        cubes.add(new Cube(this.playground, new Point(this.position.x + (this.size) * 2, this.position.y + this.size), this.size, Color.YELLOW));
     }
 
-   @Override
+    @Override
     public GameObject fallCorrection() {
         GameObject movedObject = new OShape(this);
         ArrayList<Cube> oldCubes;
         oldCubes = this.getCubes();
         ArrayList<Cube> newCubes;
         newCubes = new ArrayList();
-        for(Cube cube : oldCubes){
-            newCubes.add(new Cube(playground,new Point(cube.position.x,cube.position.y+50),50,Color.YELLOW));
+        for (Cube cube : oldCubes) {
+            newCubes.add(new Cube(playground, new Point(cube.position.x, cube.position.y + 50), 50, Color.YELLOW));
         }
         movedObject.setCubes(newCubes);
         return movedObject;
     }
+
     @Override
     public GameObject flyCorrection() {
         GameObject movedObject = new OShape(this);
@@ -80,8 +81,8 @@ public class OShape extends GameObject {
         oldCubes = this.getCubes();
         ArrayList<Cube> newCubes;
         newCubes = new ArrayList();
-        for(Cube cube : oldCubes){
-            newCubes.add(new Cube(playground,new Point(cube.position.x,cube.position.y+50),50,Color.YELLOW));
+        for (Cube cube : oldCubes) {
+            newCubes.add(new Cube(playground, new Point(cube.position.x, cube.position.y + 50), 50, Color.YELLOW));
         }
         movedObject.setCubes(newCubes);
         return movedObject;

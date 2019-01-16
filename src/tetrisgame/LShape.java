@@ -17,7 +17,7 @@ public class LShape extends GameObject {
         this.active = active;
         construct();
     }
-    
+
     public LShape(GameObject oldObject) {
         this.playground = oldObject.getPlayground();
         this.position = oldObject.getPosition();
@@ -89,12 +89,13 @@ public class LShape extends GameObject {
         oldCubes = this.getCubes();
         ArrayList<Cube> newCubes;
         newCubes = new ArrayList();
-        for(Cube cube : oldCubes){
-            newCubes.add(new Cube(playground,new Point(cube.position.x,cube.position.y+50),50,Color.ORANGE));
+        for (Cube cube : oldCubes) {
+            newCubes.add(new Cube(playground, new Point(cube.position.x, cube.position.y + 50), 50, Color.ORANGE));
         }
         movedObject.setCubes(newCubes);
         return movedObject;
     }
+
     @Override
     public GameObject flyCorrection() {
         GameObject movedObject = new LShape(this);
@@ -102,8 +103,8 @@ public class LShape extends GameObject {
         oldCubes = this.getCubes();
         ArrayList<Cube> newCubes;
         newCubes = new ArrayList();
-        for(Cube cube : oldCubes){
-            newCubes.add(new Cube(playground,new Point(cube.position.x,cube.position.y+50),50,Color.ORANGE));
+        for (Cube cube : oldCubes) {
+            newCubes.add(new Cube(playground, new Point(cube.position.x, cube.position.y + 50), 50, Color.ORANGE));
         }
         movedObject.setCubes(newCubes);
         return movedObject;

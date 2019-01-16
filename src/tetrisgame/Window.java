@@ -9,8 +9,8 @@ import javax.swing.DefaultListModel;
  */
 public class Window extends javax.swing.JFrame {
 
-    private final Dimension preferredSize = new Dimension(1000, 900);
-    private Playground playground;
+    private final Dimension preferredSize = new Dimension(800, 900);
+    private Playground pg;
     DefaultListModel model = new DefaultListModel();
     Cube cube;
 
@@ -18,14 +18,18 @@ public class Window extends javax.swing.JFrame {
      * Creates new form NewJFrame
      */
     public Window() {
+        pg = new Playground(this, model);
         this.setPreferredSize(preferredSize);
-        playground = new Playground(this, model);
         initComponents();
-        GOText.setVisible(false);
-        this.add(playground);
+        myInitComponents();
     }
 
-    
+    private void myInitComponents() {
+        playgroundPanel.add(pg);
+        playgroundPanel.setOpaque(Boolean.FALSE);
+        GOText.setVisible(Boolean.FALSE);
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -35,12 +39,27 @@ public class Window extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-        score = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
+        score = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        playgroundPanel = new javax.swing.JPanel();
         GOText = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(800, 900));
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        jLabel1.setText("Skóre");
+
+        score.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        score.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        score.setAlignmentX(5.0F);
+        score.setAlignmentY(5.0F);
+        score.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                scoreActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("Start");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -49,59 +68,80 @@ public class Window extends javax.swing.JFrame {
             }
         });
 
-        score.setText("placeholder");
-        score.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                scoreActionPerformed(evt);
-            }
-        });
-
-        jLabel1.setText("Skóre");
+        playgroundPanel.setBackground(new java.awt.Color(255, 51, 51));
+        playgroundPanel.setToolTipText("Herní plocha");
+        playgroundPanel.setAlignmentX(50.0F);
+        playgroundPanel.setAlignmentY(50.0F);
+        playgroundPanel.setMaximumSize(new java.awt.Dimension(1000, 900));
+        playgroundPanel.setMinimumSize(new java.awt.Dimension(1000, 900));
 
         GOText.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
         GOText.setText("GAME OVER");
+
+        javax.swing.GroupLayout playgroundPanelLayout = new javax.swing.GroupLayout(playgroundPanel);
+        playgroundPanel.setLayout(playgroundPanelLayout);
+        playgroundPanelLayout.setHorizontalGroup(
+            playgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(playgroundPanelLayout.createSequentialGroup()
+                .addGap(143, 143, 143)
+                .addComponent(GOText)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        playgroundPanelLayout.setVerticalGroup(
+            playgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(playgroundPanelLayout.createSequentialGroup()
+                .addGap(359, 359, 359)
+                .addComponent(GOText)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(29, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(playgroundPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(score, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(22, 22, 22)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addComponent(score, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(GOText, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(52, 52, 52))
+                        .addGap(62, 62, 62)
+                        .addComponent(jLabel1)))
+                .addContainerGap(89, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(255, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(29, 29, 29))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(150, 150, 150)
-                        .addComponent(GOText, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(score, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addGap(130, 130, 130))
+                .addGap(78, 78, 78)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(score, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(playgroundPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 836, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public void setGameOver(Boolean status) {
+        GOText.setVisible(true);
+    }
+
+    public void setSkore(int skore) {
+        score.setText(Integer.toString(skore));
+    }
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        playground.timer.start();
-        playground.addObject();
+        pg.timer.start();
+        pg.addObject();
+        pg.skore = 0;
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void scoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_scoreActionPerformed
@@ -148,6 +188,7 @@ public class Window extends javax.swing.JFrame {
     private javax.swing.JLabel GOText;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel playgroundPanel;
     private javax.swing.JTextField score;
     // End of variables declaration//GEN-END:variables
 }

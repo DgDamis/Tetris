@@ -49,7 +49,6 @@ public class Cube {
         this.brushColor = brushColor;
         this.area = new Area(new Rectangle2D.Double(this.position.getX(), this.position.getY(), this.size, this.size));
     }
-    
 
     public Point getPosition() {
         return position;

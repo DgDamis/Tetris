@@ -17,7 +17,7 @@ public class TShape extends GameObject {
         this.active = active;
         construct();
     }
-    
+
     public TShape(GameObject oldObject) {
         this.playground = oldObject.getPlayground();
         this.position = oldObject.getPosition();
@@ -89,13 +89,13 @@ public class TShape extends GameObject {
         oldCubes = this.getCubes();
         ArrayList<Cube> newCubes;
         newCubes = new ArrayList();
-        for(Cube cube : oldCubes){
-            newCubes.add(new Cube(playground,new Point(cube.position.x,cube.position.y+50),50,Color.MAGENTA));
+        for (Cube cube : oldCubes) {
+            newCubes.add(new Cube(playground, new Point(cube.position.x, cube.position.y + 50), 50, Color.MAGENTA));
         }
         movedObject.setCubes(newCubes);
         return movedObject;
     }
-    
+
     @Override
     public GameObject flyCorrection() {
         GameObject movedObject = new TShape(this);
@@ -103,8 +103,8 @@ public class TShape extends GameObject {
         oldCubes = this.getCubes();
         ArrayList<Cube> newCubes;
         newCubes = new ArrayList();
-        for(Cube cube : oldCubes){
-            newCubes.add(new Cube(playground,new Point(cube.position.x,cube.position.y+50),50,Color.MAGENTA));
+        for (Cube cube : oldCubes) {
+            newCubes.add(new Cube(playground, new Point(cube.position.x, cube.position.y + 50), 50, Color.MAGENTA));
         }
         movedObject.setCubes(newCubes);
         return movedObject;

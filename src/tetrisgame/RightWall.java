@@ -1,7 +1,6 @@
 package tetrisgame;
 
 import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.Point;
 import java.util.ArrayList;
 
@@ -47,6 +46,5 @@ public class RightWall extends GameObject {
     public GameObject flyCorrection() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
 
 }

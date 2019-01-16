@@ -2,8 +2,6 @@ package tetrisgame;
 
 import java.awt.Color;
 import java.awt.Point;
-import java.awt.geom.Area;
-import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 /**
@@ -60,10 +58,10 @@ public final class IShape extends GameObject {
     private void construct() {
         switch (this.angle) {
             case 0:
-                cubes.add(new Cube(this.playground, new Point(this.position.x - 50, this.position.y), 50, Color.CYAN));
                 cubes.add(new Cube(this.playground, new Point(this.position.x, this.position.y), 50, Color.CYAN));
                 cubes.add(new Cube(this.playground, new Point(this.position.x + 50, this.position.y), 50, Color.CYAN));
                 cubes.add(new Cube(this.playground, new Point(this.position.x + 100, this.position.y), 50, Color.CYAN));
+                cubes.add(new Cube(this.playground, new Point(this.position.x + 150, this.position.y), 50, Color.CYAN));
                 break;
             case 90:
                 cubes.add(new Cube(this.playground, new Point(this.position.x, this.position.y + (this.size * -1)), 50, Color.CYAN));
@@ -72,10 +70,10 @@ public final class IShape extends GameObject {
                 cubes.add(new Cube(this.playground, new Point(this.position.x, this.position.y + (this.size * 2)), 50, Color.CYAN));
                 break;
             case 180:
-                cubes.add(new Cube(this.playground, new Point(this.position.x - 50, this.position.y), 50, Color.CYAN));
                 cubes.add(new Cube(this.playground, new Point(this.position.x, this.position.y), 50, Color.CYAN));
                 cubes.add(new Cube(this.playground, new Point(this.position.x + 50, this.position.y), 50, Color.CYAN));
                 cubes.add(new Cube(this.playground, new Point(this.position.x + 100, this.position.y), 50, Color.CYAN));
+                cubes.add(new Cube(this.playground, new Point(this.position.x + 150, this.position.y), 50, Color.CYAN));
                 break;
             case 270:
                 cubes.add(new Cube(this.playground, new Point(this.position.x, this.position.y), 50, Color.CYAN));
@@ -94,12 +92,12 @@ public final class IShape extends GameObject {
         ArrayList<Cube> newCubes;
         newCubes = new ArrayList();
         for (Cube cube : oldCubes) {
-            newCubes.add(new Cube(playground, new Point(cube.position.x, cube.position.y + 50),50,Color.CYAN));
+            newCubes.add(new Cube(playground, new Point(cube.position.x, cube.position.y + 50), 50, Color.CYAN));
         }
         movedObject.setCubes(newCubes);
         return movedObject;
     }
-    
+
     @Override
     public GameObject flyCorrection() {
         GameObject movedObject = new IShape(this);
@@ -108,7 +106,7 @@ public final class IShape extends GameObject {
         ArrayList<Cube> newCubes;
         newCubes = new ArrayList();
         for (Cube cube : oldCubes) {
-            newCubes.add(new Cube(playground, new Point(cube.position.x, cube.position.y - 50),50,Color.CYAN));
+            newCubes.add(new Cube(playground, new Point(cube.position.x, cube.position.y - 50), 50, Color.CYAN));
         }
         movedObject.setCubes(newCubes);
         return movedObject;

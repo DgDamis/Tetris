@@ -190,9 +190,6 @@ public abstract class GameObject {
         newArrayList = new ArrayList(objects);
         return newArrayList;
     }
-     
-    
-    
 
     public void turn() {
         this.angle = (this.angle + 90);

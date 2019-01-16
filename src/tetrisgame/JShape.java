@@ -26,7 +26,7 @@ public class JShape extends GameObject {
         this.fillColor = oldObject.getFillColor();
         this.cubes = oldObject.getCubes();
     }
-    
+
     @Override
     public void moveUp() {
         cubes.clear();
@@ -89,13 +89,13 @@ public class JShape extends GameObject {
         oldCubes = this.getCubes();
         ArrayList<Cube> newCubes;
         newCubes = new ArrayList();
-        for(Cube cube : oldCubes){
-            newCubes.add(new Cube(playground,new Point(cube.position.x,cube.position.y+50),50,Color.BLUE));
+        for (Cube cube : oldCubes) {
+            newCubes.add(new Cube(playground, new Point(cube.position.x, cube.position.y + 50), 50, Color.BLUE));
         }
         movedObject.setCubes(newCubes);
         return movedObject;
     }
-    
+
     @Override
     public GameObject flyCorrection() {
         GameObject movedObject = new JShape(this);
@@ -103,12 +103,11 @@ public class JShape extends GameObject {
         oldCubes = this.getCubes();
         ArrayList<Cube> newCubes;
         newCubes = new ArrayList();
-        for(Cube cube : oldCubes){
-            newCubes.add(new Cube(playground,new Point(cube.position.x,cube.position.y+50),50,Color.BLUE));
+        for (Cube cube : oldCubes) {
+            newCubes.add(new Cube(playground, new Point(cube.position.x, cube.position.y + 50), 50, Color.BLUE));
         }
         movedObject.setCubes(newCubes);
         return movedObject;
     }
 
 }
-

@@ -47,5 +47,4 @@ public class PlaygroundLayer extends GameObject {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-
 }

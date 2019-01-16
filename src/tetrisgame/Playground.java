@@ -31,7 +31,7 @@ public class Playground extends JPanel implements ActionListener, KeyListener {
     GameObject leftWall;
     GameObject rightWall;
     ArrayList<GameObject> backgroundLayers;
-    Point defaultStartingPoint = new Point(150, 100);
+    Point defaultStartingPoint = new Point((this.getWidth() / 2) + 50, 100);
     int lastObject;
     int beforeLastObject;
     public int skore = 0;
@@ -47,7 +47,7 @@ public class Playground extends JPanel implements ActionListener, KeyListener {
     protected void paintComponent(Graphics gr) {
         // Vyvolání této funkce, pro vykreslení
         super.paintComponent(gr);
-        window.setTitle(Integer.toString(skore));
+        window.setSkore(skore);
         // Vykreslení všech objektů
         for (GameObject ob : objects) {
             ob.paint(gr);
@@ -118,6 +118,7 @@ public class Playground extends JPanel implements ActionListener, KeyListener {
                     this.repaint();
                     timer.stop();
                     gameStart = Boolean.FALSE;
+                    window.setGameOver(Boolean.TRUE);
                     pendingObject = null;
                 }
                 // V případě naražení do zdí, je zamezeno útěku ven
@@ -148,7 +149,7 @@ public class Playground extends JPanel implements ActionListener, KeyListener {
                     newArrayList = layer.getUpdatedArrayOfObjects(objects);
                     // Uvedení informace, že došlo ke smazání vrstvy a úpravě objektů
                     layerCleared = Boolean.TRUE;
-                    skore += 1000;
+                    skore += 10000;
                 }
             }
         }
@@ -221,6 +222,7 @@ public class Playground extends JPanel implements ActionListener, KeyListener {
         this.setFocusable(true);
         // Inicializace poslouchače klávesnice
         this.addKeyListener(this);
+        window.setTitle("Tetris");
         objects = new ArrayList();
         backgroundLayers = new ArrayList();
         // Testovací provoz, přidání dvou testovacích objektů
