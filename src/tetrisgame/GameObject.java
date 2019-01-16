@@ -23,7 +23,6 @@ public abstract class GameObject {
     protected int angle = 0;
     ArrayList<Cube> cubes;
 
-
     public void paint(Graphics gr) {
         for (Cube c : cubes) {
             c.paint(gr);
@@ -83,11 +82,9 @@ public abstract class GameObject {
     }
 
     public void setCubes(ArrayList<Cube> cubes) {
-        this.cubes = cubes;
+        this.cubes = new ArrayList(cubes);
     }
 
-    
-    
     public Boolean getActive() {
         return active;
     }
@@ -146,13 +143,21 @@ public abstract class GameObject {
 
     public int getNumberOfCollisionInLayer(ArrayList<GameObject> objects) {
         int numberOfCollisions = 0;
+        Boolean breakk = Boolean.FALSE;
         for (Cube lw : cubes) {
             for (GameObject objekt : objects) {
                 for (Cube cube : objekt.cubes) {
                     if (lw.area.intersects(new Rectangle2D.Double(cube.position.getX(), cube.position.getY(), cube.size, cube.size))) {
                         numberOfCollisions++;
+                        breakk = Boolean.TRUE;
+                        break;
                     }
                 }
+                if (breakk) {
+                    breakk = Boolean.FALSE;
+                    break;
+                }
+
             }
         }
         return numberOfCollisions;
@@ -161,24 +166,33 @@ public abstract class GameObject {
     // Vrací aktualizovaný ArrayList s herními objekty s odstraněnými částmi, které se nacházely na smazané vrstvě
     public ArrayList getUpdatedArrayOfObjects(ArrayList<GameObject> objects) {
         ArrayList<GameObject> newArrayList;
-        newArrayList = new ArrayList();
         ArrayList<Cube> cubesToRemove;
         cubesToRemove = new ArrayList();
+        Boolean breakk = Boolean.FALSE;
         for (Cube lw : cubes) {
             for (GameObject objekt : objects) {
                 for (Cube cube : objekt.cubes) {
                     if (lw.area.intersects(new Rectangle2D.Double(cube.position.getX(), cube.position.getY(), cube.size, cube.size))) {
                         cubesToRemove.add(cube);
+                        breakk = Boolean.TRUE;
+                        break;
                     }
                 }
-                for(Cube cube : cubesToRemove){
+                for (Cube cube : cubesToRemove) {
                     objekt.cubes.remove(cube);
+                }
+                if (breakk) {
+                    breakk = Boolean.FALSE;
+                    break;
                 }
             }
         }
-        newArrayList = objects;
+        newArrayList = new ArrayList(objects);
         return newArrayList;
     }
+     
+    
+    
 
     public void turn() {
         this.angle = (this.angle + 90);
@@ -259,16 +273,15 @@ public abstract class GameObject {
         }
 
     }
-    
 
     abstract public void moveToSide(String direction);
 
     abstract public void fallAnimate(int speed);
 
     abstract public void moveUp();
-    
+
     abstract public GameObject fallCorrection();
-    
+
     abstract public GameObject flyCorrection();
 
 }

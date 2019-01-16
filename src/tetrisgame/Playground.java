@@ -36,7 +36,6 @@ public class Playground extends JPanel implements ActionListener, KeyListener {
     int beforeLastObject;
     public int skore = 0;
     Boolean gameStart = Boolean.FALSE;
-    
 
     public Playground(Window window, DefaultListModel model) {
         this.window = window;
@@ -139,7 +138,6 @@ public class Playground extends JPanel implements ActionListener, KeyListener {
         }
 
         // Kontrola naplnění řady
-        /*
         if (checkLayers) {
             for (GameObject layer : backgroundLayers) {
                 //System.out.print("Počet kolizí ve vrstvě: ");
@@ -148,57 +146,53 @@ public class Playground extends JPanel implements ActionListener, KeyListener {
                 if (layer.getNumberOfCollisionInLayer(objects) >= 10) {
                     System.out.println("Mažu vrstvu");
                     newArrayList = layer.getUpdatedArrayOfObjects(objects);
-                    // Vše, co zbylo na herním poli, je posunuto dolů
-                    for (GameObject objekt2 : newArrayList) {
-                        tempArray1.add(objekt2.fallCorrection());
-                    }
-                    // Opravené (posunuté pole) je vráceno zpět
-                    newArrayList = tempArray1;
                     // Uvedení informace, že došlo ke smazání vrstvy a úpravě objektů
                     layerCleared = Boolean.TRUE;
                     skore += 1000;
                 }
             }
         }
-        */
 
-        /*
         if (layerCleared) {
-            ArrayList<GameObject> newArrayList3;
-            newArrayList3 = new ArrayList();
-            for (GameObject obj : newArrayList) {
-                for (GameObject testedObject : newArrayList) {
-                    if (obj == testedObject) {
+            // Vše, co zbylo na herním poli, je posunuto dolů
+            for (GameObject objekt2 : newArrayList) {
+                tempArray1.add(objekt2.fallCorrection());
+            }
+            newArrayList = new ArrayList(tempArray1);
+            // Kontrola kolize s podlahou
+            tempArray1 = new ArrayList();
+            for (GameObject objekt : newArrayList) {
+                if (floor.getFloorCollision(objekt)) {
+                    tempArray1.add(objekt.flyCorrection());
+                } else {
+                    tempArray1.add(objekt);
+                }
+            }
+            newArrayList = new ArrayList(tempArray1);
+            // Pokud dojde k posunu do jiného objektu, je objekt navrácen do původní pozice
+            /*
+            tempArray1 = new ArrayList();
+            for (GameObject objekt : newArrayList) {
+                // Zjištění, zda každy objekt nekoliduje s ostatními
+                for (GameObject testedObjekt : newArrayList) {
+                    // Vynechání sebe sama pro test kolize
+                    if (objekt == testedObjekt) {
                         continue;
                     }
-                    if (floor.getFloorCollision(obj)) {
-                        newArrayList3.add(obj.flyCorrection());
-                    } else if (obj.getCollision(testedObject)) {
-                        newArrayList3.add(obj.flyCorrection());
+                    // Samotný test kolize
+                    if (objekt.getCollision(testedObjekt)) {
+                        // V případě kolize s jiným objektem dojde k návratu
+                        //while (objekt.getCollision(testedObjekt)) {
+                            tempArray1.add(objekt.flyCorrection());
+                        //}
                     } else {
-                        newArrayList3.add(obj);
+                        tempArray1.add(objekt);
                     }
                 }
             }
-            newArrayList = newArrayList3;
-
-        }
-         */
-        if (layerCleared) {
-            for (GameObject objekt2 : newArrayList) {
-                newArrayList2.add(objekt2.fallCorrection());
-            }
-            newArrayList = newArrayList2;
-            ArrayList<GameObject> newArrayList4;
-            newArrayList4 = new ArrayList();
-            for (GameObject obj : newArrayList) {
-                if (floor.getFloorCollision(obj)) {
-                    newArrayList4.add(obj.flyCorrection());
-                } else {
-                    newArrayList4.add(obj);
-                }
-
-            }
+             */
+            // Opravené (posunuté pole) je vráceno zpět
+            newArrayList = new ArrayList(tempArray1);
         }
         // Aktualizace pole objektů
         objects = new ArrayList(newArrayList);
@@ -212,9 +206,9 @@ public class Playground extends JPanel implements ActionListener, KeyListener {
     // Testovací provoz, přidání dalšího objektu po kliknutí na tlačítko
 
     public void addObject() {
-        if(Objects.equals(gameStart, Boolean.FALSE)){
-        objects.add(getRandomObject(defaultStartingPoint));
-        gameStart = Boolean.TRUE;
+        if (Objects.equals(gameStart, Boolean.FALSE)) {
+            objects.add(getRandomObject(defaultStartingPoint));
+            gameStart = Boolean.TRUE;
         }
         this.requestFocusInWindow();
     }

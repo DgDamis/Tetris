@@ -104,11 +104,11 @@ public final class IShape extends GameObject {
     public GameObject flyCorrection() {
         GameObject movedObject = new IShape(this);
         ArrayList<Cube> oldCubes;
-        oldCubes = this.getCubes();
+        oldCubes = new ArrayList(this.getCubes());
         ArrayList<Cube> newCubes;
         newCubes = new ArrayList();
         for (Cube cube : oldCubes) {
-            newCubes.add(new Cube(playground, new Point(cube.position.x, cube.position.y + 50),50,Color.CYAN));
+            newCubes.add(new Cube(playground, new Point(cube.position.x, cube.position.y - 50),50,Color.CYAN));
         }
         movedObject.setCubes(newCubes);
         return movedObject;
